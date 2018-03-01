@@ -6,7 +6,7 @@ repository = "https://github.com/StackCrash/kryptos.git"
 homepage = "https://github.com/StackCrash/kryptos"
 license = "MIT"
 readme = "README.md"
-documentation = "https://stackcrash.github.io/kryptos"
-description = "A Rust implementation of various older, insecure, cryptrographic ciphers."
+documentation = "https://docs.rs/kryptos"
+description = "A Rust implementation of various older, insecure, cryptographic ciphers."
 
 [dependencies]
