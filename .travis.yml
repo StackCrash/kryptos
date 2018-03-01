@@ -5,7 +5,9 @@ rust:
   - beta
   - nightly
   - 1.0.0
-
+os:
+  - linux
+  - osx
 matrix:
   fast_finish: true
   allow_failures:
