@@ -54,6 +54,11 @@ branches:
     - staging # bors r+
     - trying  # bors try
     - master
+
+notifications:
+  email:
+    on_success: never
+
 env:
   global:
   - TRAVIS_CARGO_NIGHTLY_FEATURE=""
