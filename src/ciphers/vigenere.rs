@@ -25,9 +25,8 @@ impl Vigenere {
         for c in key.chars() {
             if c.is_alphabetic() {
                 continue;
-            } else {
-                return Err(String::from("Key must be alphabetic"));
             }
+            return Err(String::from("Key must be alphabetic"));
         }
         Ok(Vigenere { key })
     }
