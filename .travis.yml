@@ -12,9 +12,9 @@ matrix:
     - env: NAME='cargo-travis'
     - rust: 1.0.0
   include:
-    - rust: nightly-2018-01-12
+    - rust: nightly-2018-02-28
       env: # use env so updating versions causes cache invalidation
-        - CLIPPY_VERSION=0.0.179
+        - CLIPPY_VERSION=0.0.187
       before_script:
         - rustup component add rustfmt-preview
         - cargo install clippy --version $CLIPPY_VERSION || echo "clippy already installed"
