@@ -60,8 +60,8 @@ impl Caesar {
         Caesar::shift(ciphertext, rot)
     }
 
-    /// Shifts letters in a message by a given rotation.
-    ///
+    // Shifts letters in a message by a given rotation.
+    //
     fn shift(text: &str, rot: u8) -> String {
         text.chars()
             .map(|c| match c as u8 {
