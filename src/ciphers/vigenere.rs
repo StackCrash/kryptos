@@ -46,7 +46,7 @@ impl Vigenere {
     /// ```
     ///
     pub fn encipher(&self, plaintext: &str) -> String {
-        Vigenere::transpose(self.convert_key(), plaintext)
+        Vigenere::transpose(&self.convert_key(), plaintext)
     }
 
     /// Deciphers a message with a vignere cipher.
@@ -69,12 +69,12 @@ impl Vigenere {
         for n in self.convert_key() {
             filter.push((26 - n) % 26);
         }
-        Vigenere::transpose(filter, ciphertext)
+        Vigenere::transpose(&filter, ciphertext)
     }
 
-    // Uses the converted key to perform the enchipher or decipher of a message.
+    // Uses the converted key to perform the encipher or decipher of a message.
     //
-    fn transpose(filter: Vec<u8>, text: &str) -> String {
+    fn transpose(filter: &[u8], text: &str) -> String {
         let mut filter_index = 0;
         let mut result = String::new();
 
@@ -82,15 +82,13 @@ impl Vigenere {
             match c as u8 {
                 65...90 => {
                     result.push(
-                        (((c as u8 - 65 + u8::from(filter[filter_index % filter.len()])) % 26) + 65)
-                            as char,
+                        (((c as u8 - 65 + filter[filter_index % filter.len()]) % 26) + 65) as char,
                     );
                     filter_index += 1;
                 }
                 97...122 => {
                     result.push(
-                        (((c as u8 - 97 + u8::from(filter[filter_index % filter.len()])) % 26) + 97)
-                            as char,
+                        (((c as u8 - 97 + filter[filter_index % filter.len()]) % 26) + 97) as char,
                     );
                     filter_index += 1;
                 }
@@ -100,11 +98,8 @@ impl Vigenere {
         result
     }
 
-    /// Converts a key into a vector of u8.
-    ///
-    /// # Panics
-    /// Will panic if there is a none alphabetic character in the key.
-    ///
+    // Converts a key into a vector of u8.
+    //
     fn convert_key(&self) -> Vec<u8> {
         self.key
             .chars()
