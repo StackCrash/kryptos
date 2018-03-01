@@ -35,8 +35,7 @@ matrix:
           cargo coverage --verbose &&
           bash <(curl -s https://codecov.io/bash) -s target/kcov
         - |
-          cargo doc --verbose &&
-          cargo doc-upload
+          cargo doc --verbose
       addons: # required for kcov
         apt:
           packages:
