@@ -9,10 +9,10 @@
 A Rust implementation of various older, insecure, cryptographic ciphers.
 
 ## Ciphers
-##### Implemented
+#### Implemented
 - Caesar
 - Vigenere
 - Simple Substitution
-##### TODO
-- Skytale
-- Others
+- Scytale
+#### TODO
+- Railfence
