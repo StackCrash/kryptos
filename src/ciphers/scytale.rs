@@ -131,9 +131,15 @@ mod tests {
     }
 
     #[test]
-    fn height_greater_than_text() {
+    fn encipher_height_greater_than_text() {
         let s = Scytale::new(10).unwrap();
         assert!(s.encipher("abc").is_err());
+    }
+
+    #[test]
+    fn decipher_height_greater_than_text() {
+        let s = Scytale::new(10).unwrap();
+        assert!(s.decipher("abc").is_err());
     }
 
     #[test]
