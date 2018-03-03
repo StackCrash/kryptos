@@ -37,14 +37,23 @@ impl Scytale {
     /// use kryptos::ciphers::scytale::Scytale;
     ///
     /// let s = Scytale::new(6).unwrap();
-    /// assert_eq!("I r aeh tas ve ec ", s.encipher("I have a secret"));
+    /// assert_eq!("I r aeh tas ve ec ", s.encipher("I have a secret").unwrap());
     /// ```
     ///
-    pub fn encipher(&self, plaintext: &str) -> String {
-        self.transpose(plaintext, false)
+    /// # Errors
+    /// Will return an error if the height is greater than the length of the text
+    ///
+    pub fn encipher(&self, plaintext: &str) -> Result<String, String> {
+        let matrix = self.transpose(plaintext, false);
+        if matrix.is_err() {
+            return Err(matrix.unwrap_err().clone());
+        }
+
+        Ok(matrix
+            .unwrap()
             .iter()
             .map(|col| col.iter().cloned().collect::<String>())
-            .collect::<String>()
+            .collect::<String>())
     }
 
     /// Deciphers a message with a scytale cipher.
@@ -55,27 +64,36 @@ impl Scytale {
     /// use kryptos::ciphers::scytale::Scytale;
     ///
     /// let s = Scytale::new(6).unwrap();
-    /// assert_eq!("I have a secret", s.decipher("I r aeh tas ve ec "));
+    /// assert_eq!("I have a secret", s.decipher("I r aeh tas ve ec ").unwrap());
     /// ```
     ///
-    pub fn decipher(&self, ciphertext: &str) -> String {
+    /// # Errors
+    /// Will return an error if the height is greater than the length of the text
+    ///
+    pub fn decipher(&self, ciphertext: &str) -> Result<String, String> {
         let mut plaintext = String::new();
         let width = f64::ceil(ciphertext.chars().count() as f64 / self.height as f64) as usize;
-        let matrix = self.transpose(ciphertext, true);
 
+        // Pass any errors from self.transpose()
+        let matrix = self.transpose(ciphertext, true);
+        if matrix.is_err() {
+            return Err(matrix.unwrap_err().clone());
+        }
+
+        let matrix = matrix.unwrap();
         for row in 0..width {
             for col in matrix.iter().take(self.height) {
                 plaintext.push(col[row])
             }
         }
 
-        String::from(plaintext.trim())
+        Ok(String::from(plaintext.trim()))
     }
 
     // Takes a &str and converts it to a two dimensional vector.
-    fn transpose(&self, text: &str, decipher: bool) -> Vec<Vec<char>> {
+    fn transpose(&self, text: &str, decipher: bool) -> Result<Vec<Vec<char>>, String> {
         if self.height >= text.chars().count() {
-            panic!("The height must be less than the text");
+            return Err(String::from("The height must be less than the text"));
         }
 
         let width = f64::ceil(text.chars().count() as f64 / self.height as f64) as usize;
@@ -94,7 +112,7 @@ impl Scytale {
             }
         }
 
-        matrix
+        Ok(matrix)
     }
 }
 
@@ -113,21 +131,20 @@ mod tests {
     }
 
     #[test]
-    #[should_panic]
     fn height_greater_than_text() {
         let s = Scytale::new(10).unwrap();
-        s.encipher("abc");
+        assert!(s.encipher("abc").is_err());
     }
 
     #[test]
     fn encipher() {
         let s = Scytale::new(6).unwrap();
-        assert_eq!("I r aeh tas ve ec ", s.encipher("I have a secret"));
+        assert_eq!("I r aeh tas ve ec ", s.encipher("I have a secret").unwrap());
     }
 
     #[test]
     fn decipher() {
         let s = Scytale::new(6).unwrap();
-        assert_eq!("I have a secret", s.decipher("I r aeh tas ve ec "));
+        assert_eq!("I have a secret", s.decipher("I r aeh tas ve ec ").unwrap());
     }
 }

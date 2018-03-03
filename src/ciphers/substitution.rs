@@ -55,7 +55,7 @@ impl Substitution {
     /// let s = Substitution::new("NAKYQRTXBZPFIVEJSDCHGOUMWL").unwrap();
     /// assert_eq!(
     ///     "Ye weg fbpq cqkdqh iqccntqc",
-    ///     s.encipher("Do you like secret messages")
+    ///     s.encipher("Do you like secret messages").unwrap()
     /// );
     /// ```
     ///
@@ -63,8 +63,8 @@ impl Substitution {
     ///
     /// Will panic if there is a missing character or invalid character.
     ///
-    pub fn encipher(&self, plaintext: &str) -> String {
-        plaintext
+    pub fn encipher(&self, plaintext: &str) -> Result<String, &'static str> {
+        Ok(plaintext
             .chars()
             .map(|c| match c as u8 {
                 65...90 => {
@@ -87,7 +87,7 @@ impl Substitution {
                 }
                 _ => c,
             })
-            .collect::<String>()
+            .collect::<String>())
     }
 
     /// Deciphers a message with a substitution cipher.
@@ -100,7 +100,7 @@ impl Substitution {
     /// let s = Substitution::new("NAKYQRTXBZPFIVEJSDCHGOUMWL").unwrap();
     /// assert_eq!(
     ///     "Do you like secret messages",
-    ///     s.decipher("Ye weg fbpq cqkdqh iqccntqc")
+    ///     s.decipher("Ye weg fbpq cqkdqh iqccntqc").unwrap()
     /// );
     /// ```
     ///
@@ -108,8 +108,8 @@ impl Substitution {
     ///
     /// Will panic if there is a missing character or invalid character.
     ///
-    pub fn decipher(&self, plaintext: &str) -> String {
-        plaintext
+    pub fn decipher(&self, plaintext: &str) -> Result<String, &'static str> {
+        Ok(plaintext
             .chars()
             .map(|c| match c as u8 {
                 65...90 => {
@@ -132,7 +132,7 @@ impl Substitution {
                 }
                 _ => c,
             })
-            .collect::<String>()
+            .collect::<String>())
     }
 }
 
@@ -170,7 +170,7 @@ mod tests {
         let s = Substitution::new("NAKYQRTXBZPFIVEJSDCHGOUMWL").unwrap();
         assert_eq!(
             "Ye weg fbpq cqkdqh iqccntqc",
-            s.encipher("Do you like secret messages")
+            s.encipher("Do you like secret messages").unwrap()
         );
     }
 
@@ -179,7 +179,7 @@ mod tests {
         let s = Substitution::new("NAKYQRTXBZPFIVEJSDCHGOUMWL").unwrap();
         assert_eq!(
             "Ye weg fbpq cqkdqh iqccntqc?",
-            s.encipher("Do you like secret messages?")
+            s.encipher("Do you like secret messages?").unwrap()
         );
     }
 
@@ -188,7 +188,7 @@ mod tests {
         let s = Substitution::new("NAKYQRTXBZPFIVEJSDCHGOUMWL").unwrap();
         assert_eq!(
             "Ye weg fbpq cqkdqh 🖤 iqccntqc",
-            s.encipher("Do you like secret 🖤 messages")
+            s.encipher("Do you like secret 🖤 messages").unwrap()
         );
     }
 
@@ -197,7 +197,7 @@ mod tests {
         let s = Substitution::new("NAKYQRTXBZPFIVEJSDCHGOUMWL").unwrap();
         assert_eq!(
             "Do you like secret messages",
-            s.decipher("Ye weg fbpq cqkdqh iqccntqc")
+            s.decipher("Ye weg fbpq cqkdqh iqccntqc").unwrap()
         );
     }
 }

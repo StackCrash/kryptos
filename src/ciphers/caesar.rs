@@ -37,10 +37,10 @@ impl Caesar {
     /// use kryptos::ciphers::caesar::Caesar;
     ///
     /// let c = Caesar::new(13).unwrap();
-    /// assert_eq!("guvf vf n frperg", c.encipher("this is a secret"));
+    /// assert_eq!("guvf vf n frperg", c.encipher("this is a secret").unwrap());
     /// ```
     ///
-    pub fn encipher(&self, plaintext: &str) -> String {
+    pub fn encipher(&self, plaintext: &str) -> Result<String, &'static str> {
         Caesar::shift(plaintext, self.rot)
     }
 
@@ -52,24 +52,24 @@ impl Caesar {
     /// use kryptos::ciphers::caesar::Caesar;
     ///
     /// let c = Caesar::new(10).unwrap();
-    /// assert_eq!("this is a secret", c.decipher("drsc sc k combod"));
+    /// assert_eq!("this is a secret", c.decipher("drsc sc k combod").unwrap());
     /// ```
     ///
-    pub fn decipher(&self, ciphertext: &str) -> String {
+    pub fn decipher(&self, ciphertext: &str) -> Result<String, &'static str> {
         let rot = 26 - self.rot;
         Caesar::shift(ciphertext, rot)
     }
 
     // Shifts letters in a message by a given rotation.
     //
-    fn shift(text: &str, rot: u8) -> String {
-        text.chars()
+    fn shift(text: &str, rot: u8) -> Result<String, &'static str> {
+        Ok(text.chars()
             .map(|c| match c as u8 {
                 65...90 => (((c as u8 - 65 + rot) % 26) + 65) as char,
                 97...122 => (((c as u8 - 97 + rot) % 26) + 97) as char,
                 _ => c,
             })
-            .collect::<String>()
+            .collect::<String>())
     }
 }
 
@@ -80,13 +80,13 @@ mod tests {
     #[test]
     fn encipher() {
         let c = Caesar::new(13).unwrap();
-        assert_eq!("guvf vf n frperg", c.encipher("this is a secret"));
+        assert_eq!("guvf vf n frperg", c.encipher("this is a secret").unwrap());
     }
 
     #[test]
     fn decipher() {
         let c = Caesar::new(10).unwrap();
-        assert_eq!("this is a secret", c.decipher("drsc sc k combod"));
+        assert_eq!("this is a secret", c.decipher("drsc sc k combod").unwrap());
     }
 
     #[test]
@@ -94,7 +94,7 @@ mod tests {
         let alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         for n in 1..27 {
             let c = Caesar::new(n).unwrap();
-            assert_eq!(alpha, c.decipher(&c.encipher(alpha)));
+            assert_eq!(alpha, c.decipher(&c.encipher(alpha).unwrap()).unwrap());
         }
     }
 
@@ -103,14 +103,17 @@ mod tests {
         let c = Caesar::new(7).unwrap();
         assert_eq!(
             "Olssv, P ohcl h zljyla",
-            c.encipher("Hello, I have a secret")
+            c.encipher("Hello, I have a secret").unwrap()
         );
     }
 
     #[test]
     fn with_unicode() {
         let c = Caesar::new(9).unwrap();
-        assert_eq!("R 🖤 lahycxpajyqh", c.encipher("I 🖤 cryptography"));
+        assert_eq!(
+            "R 🖤 lahycxpajyqh",
+            c.encipher("I 🖤 cryptography").unwrap()
+        );
     }
 
     #[test]

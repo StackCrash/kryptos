@@ -41,12 +41,12 @@ impl Vigenere {
     /// let v = Vigenere::new("blaise").unwrap();
     /// assert_eq!(
     ///     "tsh ggy ilvm qsv hhqktfc",
-    ///     v.encipher("shh you have you whisper")
+    ///     v.encipher("shh you have you whisper").unwrap()
     /// );
     /// ```
     ///
-    pub fn encipher(&self, plaintext: &str) -> String {
-        Vigenere::transpose(&self.convert_key(), plaintext)
+    pub fn encipher(&self, plaintext: &str) -> Result<String, &'static str> {
+        Vigenere::transpose(&self.convert_key().unwrap(), plaintext)
     }
 
     /// Deciphers a message with a vignere cipher.
@@ -59,14 +59,14 @@ impl Vigenere {
     /// let v = Vigenere::new("blaise").unwrap();
     /// assert_eq!(
     ///     "whispering can still be heard by others",
-    ///     v.decipher("xsiahistno ueo dtqdp cp hmsve my wllfcs")
+    ///     v.decipher("xsiahistno ueo dtqdp cp hmsve my wllfcs").unwrap()
     /// );
     /// ```
     ///
-    pub fn decipher(&self, ciphertext: &str) -> String {
+    pub fn decipher(&self, ciphertext: &str) -> Result<String, &'static str> {
         let mut filter = Vec::new();
 
-        for n in self.convert_key() {
+        for n in self.convert_key().unwrap() {
             filter.push((26 - n) % 26);
         }
         Vigenere::transpose(&filter, ciphertext)
@@ -74,7 +74,7 @@ impl Vigenere {
 
     // Uses the converted key to perform the encipher or decipher of a message.
     //
-    fn transpose(filter: &[u8], text: &str) -> String {
+    fn transpose(filter: &[u8], text: &str) -> Result<String, &'static str> {
         let mut filter_index = 0;
         let mut result = String::new();
 
@@ -95,20 +95,20 @@ impl Vigenere {
                 _ => result.push(c),
             }
         }
-        result
+        Ok(result)
     }
 
     // Converts a key into a vector of u8.
     //
-    fn convert_key(&self) -> Vec<u8> {
+    fn convert_key(&self) -> Result<Vec<u8>, String> {
         self.key
             .chars()
             .map(|c| match c as u8 {
-                65...90 => (c as u8 - 65) % 26,
-                97...122 => (c as u8 - 97) % 26,
-                _ => panic!("Invalid character in key"),
+                65...90 => Ok((c as u8 - 65) % 26),
+                97...122 => Ok((c as u8 - 97) % 26),
+                _ => Err(String::from("Invalid character in key")),
             })
-            .collect::<Vec<u8>>()
+            .collect()
     }
 }
 
@@ -130,13 +130,12 @@ mod tests {
     fn key_conversion() {
         let v = vec![3, 8, 5, 5, 8, 4];
         let x = Vigenere::new("diffie").unwrap();
-        assert_eq!(v, x.convert_key());
+        assert_eq!(v, x.convert_key().unwrap());
     }
 
     #[test]
-    #[should_panic]
     fn invalid_key_conversion() {
-        Vigenere::convert_key(&Vigenere { key: "dif.fie" });
+        assert!(Vigenere::convert_key(&Vigenere { key: "dif.fie" }).is_err());
     }
 
     #[test]
@@ -144,7 +143,7 @@ mod tests {
         let v = Vigenere::new("blaise").unwrap();
         assert_eq!(
             "tsh ggy ilvm qsv hhqktfc",
-            v.encipher("shh you have you whisper")
+            v.encipher("shh you have you whisper").unwrap()
         );
     }
 
@@ -153,7 +152,7 @@ mod tests {
         let v = Vigenere::new("blaise").unwrap();
         assert_eq!(
             "tsh! ggy ilvm qsv hhqktfc",
-            v.encipher("shh! you have you whisper")
+            v.encipher("shh! you have you whisper").unwrap()
         );
     }
 
@@ -162,7 +161,7 @@ mod tests {
         let v = Vigenere::new("babbage").unwrap();
         assert_eq!(
             "Eo zpu 🖤 yidrfu mkwtahfs?",
-            v.encipher("Do you 🖤 secret messages?")
+            v.encipher("Do you 🖤 secret messages?").unwrap()
         );
     }
 
@@ -172,6 +171,7 @@ mod tests {
         assert_eq!(
             "whispering can still be heard by others",
             v.decipher("xsiahistno ueo dtqdp cp hmsve my wllfcs")
+                .unwrap()
         );
     }
 }
