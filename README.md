@@ -6,13 +6,37 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 # kryptos
-A Rust implementation of various older, insecure, cryptographic ciphers.
+A Rust implementation of various older, insecure, cryptographic ciphers. Warning, this is a pet project as I learn Rust so this project is highly unstable at the moment.
 
 ## Ciphers
 #### Implemented
-- Caesar
-- Vigenere
-- Simple Substitution
-- Scytale
+- Caesar Cipher
+- Vigenere Cipher
+- Simple Substitution Cipher
+- Scytale Cipher
+- Rail Fence Cipher
 #### TODO
-- Railfence
+- ADFGVX Cipher
+- ADFGX Cipher
+- Affine Cipher
+- Atbash Cipher
+- Autokey Cipher
+- Baconian Cipher
+- Beaufort Cipher
+- Bifid Cipher
+- Columnar Transposition Cipher
+- Enigma Cipher
+- Four-Square Cipher
+- Fractionated Morse Cipher
+- Hill Cipher
+- Homophonic Substitution Cipher
+- Lorenz Cipher
+- Playfair Cipher
+- Polybius Square Cipher
+- Porta Cipher
+- ROT13 Cipher
+- Running Key Cipher
+- Straddle Checkerboard Cipher
+- Trifid Cipher
+
+If there are ciphers not identified in TODO list that you would like to be supported please submit an issue.
