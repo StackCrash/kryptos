@@ -1,6 +1,6 @@
 [package]
 name = "kryptos"
-version = "0.5.0"
+version = "0.6.0"
 authors = ["StackCrash <derek@itsecguy.com>"]
 repository = "https://github.com/StackCrash/kryptos.git"
 homepage = "https://github.com/StackCrash/kryptos"
@@ -10,3 +10,4 @@ documentation = "https://docs.rs/kryptos"
 description = "A Rust implementation of various older, insecure, cryptographic ciphers."
 
 [dependencies]
+regex = "0.2.6"

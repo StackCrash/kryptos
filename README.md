@@ -15,13 +15,13 @@ A Rust implementation of various older, insecure, cryptographic ciphers. Warning
 - Simple Substitution Cipher
 - Scytale Cipher
 - Rail Fence Cipher
+- Baconian Cipher (Distinct only)
 #### TODO
 - ADFGVX Cipher
 - ADFGX Cipher
 - Affine Cipher
 - Atbash Cipher
 - Autokey Cipher
-- Baconian Cipher
 - Beaufort Cipher
 - Bifid Cipher
 - Columnar Transposition Cipher
