@@ -16,6 +16,7 @@ A Rust implementation of various older, insecure, cryptographic ciphers. Warning
 - Scytale Cipher
 - Rail Fence Cipher
 - Baconian Cipher (Distinct only)
+- ROT13 Cipher
 #### TODO
 - ADFGVX Cipher
 - ADFGX Cipher
@@ -34,7 +35,6 @@ A Rust implementation of various older, insecure, cryptographic ciphers. Warning
 - Playfair Cipher
 - Polybius Square Cipher
 - Porta Cipher
-- ROT13 Cipher
 - Running Key Cipher
 - Straddle Checkerboard Cipher
 - Trifid Cipher
