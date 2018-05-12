@@ -4,7 +4,7 @@ rust:
   - stable
   - beta
   - nightly
-  - 1.0.0
+  - 1.20.0
 os:
   - linux
   - osx
@@ -12,7 +12,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - env: NAME='cargo-travis'
-    - rust: 1.0.0
   include:
     - rust: nightly-2018-05-11
       env: # use env so updating versions causes cache invalidation
