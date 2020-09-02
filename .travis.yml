@@ -13,13 +13,6 @@ matrix:
   allow_failures:
     - env: NAME='cargo-travis'
   include:
-    - rust: stable
-      before_script:
-        - rustup component add rustfmt
-        - cargo install clippy || echo "clippy already installed"
-      script:
-        - cargo fmt -- --write-mode=diff
-        - cargo clippy -- -D clippy
     - env: NAME='cargo-travis'
       sudo: required # travis-ci/travis-ci#9061
       before_script:
