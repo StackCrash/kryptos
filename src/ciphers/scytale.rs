@@ -45,12 +45,12 @@ impl Scytale {
     ///
     pub fn encipher(&self, plaintext: &str) -> Result<String, String> {
         let matrix = self.transpose(plaintext, false);
-        if matrix.is_err() {
-            return Err(matrix.unwrap_err().clone());
-        }
+        let matrix = match matrix {
+            Ok(val) => val,
+            Err(e) => return Err(e)
+        };
 
         Ok(matrix
-            .unwrap()
             .iter()
             .map(|col| col.iter().cloned().collect::<String>())
             .collect::<String>())
@@ -76,11 +76,11 @@ impl Scytale {
 
         // Pass any errors from self.transpose()
         let matrix = self.transpose(ciphertext, true);
-        if matrix.is_err() {
-            return Err(matrix.unwrap_err().clone());
-        }
-
-        let matrix = matrix.unwrap();
+        let matrix = match matrix {
+            Ok(val) => val,
+            Err(e) => return Err(e)
+        };
+        
         for row in 0..width {
             for col in matrix.iter().take(self.height) {
                 plaintext.push(col[row])
