@@ -14,6 +14,9 @@ matrix:
     - env: NAME='cargo-travis'
   include:
     - rust: stable
+      before_script:
+        - rustup component add rustfmt
+        - cargo install clippy || echo "clippy already installed"
       script:
         - cargo fmt -- --write-mode=diff
         - cargo clippy -- -D clippy
