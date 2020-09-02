@@ -3,7 +3,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/StackCrash/kryptos.svg)](https://codecov.io/gh/StackCrash/kryptos)
 [![Crates.io](https://img.shields.io/crates/v/kryptos.svg)](https://crates.io/crates/kryptos)
 [![Docs.rs](https://docs.rs/kryptos/badge.svg)](https://docs.rs/kryptos)
-[![Rust](https://img.shields.io/badge/rust-1.20%2B-blue.svg?maxAge=3600)](https://github.com/StackCrash/kryptos)
+[![Rust](https://img.shields.io/badge/rust-1.28.0%2B-blue.svg?maxAge=3600)](https://github.com/StackCrash/kryptos)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 # kryptos
