@@ -77,8 +77,8 @@ impl Baconian {
         let binary = plaintext
             .chars()
             .map(|c| match c as u8 {
-                65...90 => format!("{:05b}", c as u8 - 65),
-                97...122 => format!("{:05b}", c as u8 - 97),
+                65..=90 => format!("{:05b}", c as u8 - 65),
+                97..=122 => format!("{:05b}", c as u8 - 97),
                 _ => c.to_string(),
             })
             .collect::<String>();

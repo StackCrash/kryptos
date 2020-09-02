@@ -63,10 +63,11 @@ impl Caesar {
     // Shifts letters in a message by a given rotation.
     //
     fn shift(text: &str, rot: u8) -> Result<String, &'static str> {
-        Ok(text.chars()
+        Ok(text
+            .chars()
             .map(|c| match c as u8 {
-                65...90 => (((c as u8 - 65 + rot) % 26) + 65) as char,
-                97...122 => (((c as u8 - 97 + rot) % 26) + 97) as char,
+                65..=90 => (((c as u8 - 65 + rot) % 26) + 65) as char,
+                97..=122 => (((c as u8 - 97 + rot) % 26) + 97) as char,
                 _ => c,
             })
             .collect::<String>())

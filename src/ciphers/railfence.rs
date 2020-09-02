@@ -47,7 +47,8 @@ impl RailFence {
         if self.key == 1 {
             return Ok(String::from(plaintext));
         }
-        let order = self.calculate_order(plaintext)
+        let order = self
+            .calculate_order(plaintext)
             .expect("Unable to calculate the order");
 
         let mut ciphertext = String::new();
@@ -76,7 +77,8 @@ impl RailFence {
         if self.key == 1 {
             return Ok(String::from(ciphertext));
         }
-        let order = self.calculate_order(ciphertext)
+        let order = self
+            .calculate_order(ciphertext)
             .expect("Unable to calculate the order");
 
         let mut plaintext = vec![' '; ciphertext.chars().count()];

@@ -67,23 +67,26 @@ impl Substitution {
         Ok(plaintext
             .chars()
             .map(|c| match c as u8 {
-                65...90 => {
+                65..=90 => {
                     let index = ALPHABET.chars().position(|i| i == c).unwrap();
                     self.key
                         .chars()
                         .nth(index)
                         .expect("Something is wrong with the key alphabet")
                 }
-                97...122 => {
+                97..=122 => {
                     let index = ALPHABET
                         .chars()
                         .position(|i| i == char::from(c as u8 - 97 + 65))
                         .unwrap();
-                    (self.key
+                    (self
+                        .key
                         .chars()
                         .nth(index)
                         .expect("Something is wrong with the key alphabet")
-                        as u8 - 65 + 97) as char
+                        as u8
+                        - 65
+                        + 97) as char
                 }
                 _ => c,
             })
@@ -112,15 +115,16 @@ impl Substitution {
         Ok(plaintext
             .chars()
             .map(|c| match c as u8 {
-                65...90 => {
+                65..=90 => {
                     let index = self.key.chars().position(|i| i == c).unwrap();
                     ALPHABET
                         .chars()
                         .nth(index)
                         .expect("Something is wrong with the key alphabet")
                 }
-                97...122 => {
-                    let index = self.key
+                97..=122 => {
+                    let index = self
+                        .key
                         .chars()
                         .position(|i| i == char::from(c as u8 - 97 + 65))
                         .unwrap();
@@ -128,7 +132,9 @@ impl Substitution {
                         .chars()
                         .nth(index)
                         .expect("Something is wrong with the key alphabet")
-                        as u8 - 65 + 97) as char
+                        as u8
+                        - 65
+                        + 97) as char
                 }
                 _ => c,
             })

@@ -80,13 +80,13 @@ impl Vigenere {
 
         for c in text.chars() {
             match c as u8 {
-                65...90 => {
+                65..=90 => {
                     result.push(
                         (((c as u8 - 65 + filter[filter_index % filter.len()]) % 26) + 65) as char,
                     );
                     filter_index += 1;
                 }
-                97...122 => {
+                97..=122 => {
                     result.push(
                         (((c as u8 - 97 + filter[filter_index % filter.len()]) % 26) + 97) as char,
                     );
@@ -104,8 +104,8 @@ impl Vigenere {
         self.key
             .chars()
             .map(|c| match c as u8 {
-                65...90 => Ok((c as u8 - 65) % 26),
-                97...122 => Ok((c as u8 - 97) % 26),
+                65..=90 => Ok((c as u8 - 65) % 26),
+                97..=122 => Ok((c as u8 - 97) % 26),
                 _ => Err(String::from("Invalid character in key")),
             })
             .collect()
