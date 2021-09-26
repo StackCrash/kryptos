@@ -1,4 +1,3 @@
-[![Travis](https://img.shields.io/travis/StackCrash/kryptos.svg)](https://travis-ci.org/StackCrash/kryptos) 
 [![Actions Status](https://github.com/StackCrash/kryptos/workflows/Rust/badge.svg)](https://github.com/StackCrash/kryptos/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/StackCrash/kryptos.svg)](https://codecov.io/gh/StackCrash/kryptos)
 [![Crates.io](https://img.shields.io/crates/v/kryptos.svg)](https://crates.io/crates/kryptos)
