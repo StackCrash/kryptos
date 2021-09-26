@@ -47,7 +47,7 @@ impl Scytale {
         let matrix = self.transpose(plaintext, false);
         let matrix = match matrix {
             Ok(val) => val,
-            Err(e) => return Err(e)
+            Err(e) => return Err(e),
         };
 
         Ok(matrix
@@ -78,9 +78,9 @@ impl Scytale {
         let matrix = self.transpose(ciphertext, true);
         let matrix = match matrix {
             Ok(val) => val,
-            Err(e) => return Err(e)
+            Err(e) => return Err(e),
         };
-        
+
         for row in 0..width {
             for col in matrix.iter().take(self.height) {
                 plaintext.push(col[row])
