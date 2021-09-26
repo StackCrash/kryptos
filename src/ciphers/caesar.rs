@@ -22,7 +22,7 @@ impl Caesar {
     /// Will return Err() if the rotation is not between 1 and 26.
     ///
     pub fn new(rot: u8) -> Result<Self, String> {
-        if rot < 1 || rot > 26 {
+        if !(1..=26).contains(&rot) {
             Err(String::from("Rotation must be between 1 through 26"))
         } else {
             Ok(Caesar { rot })
