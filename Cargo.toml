@@ -10,4 +10,4 @@ documentation = "https://docs.rs/kryptos"
 description = "A Rust implementation of various older, insecure, cryptographic ciphers."
 
 [dependencies]
-regex = "1.3.9"
+regex = "1.5.4"
